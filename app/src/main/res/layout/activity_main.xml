@@ -6,14 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/zip_icon"
+        android:layout_height="@dimen/zip_icon"
+        android:src="@drawable/ic_baseline_location_on_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
     <TextView
+        android:id="@+id/textHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AD340!"
+        android:layout_marginTop="16dp"
+        android:text="@string/zip_legend"
         android:textSize="@dimen/title_text_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/etSSN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="150dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/zip_hint"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textHint"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/textHint"
+        app:layout_constraintTop_toBottomOf="@+id/textHint"/>
+
+    <Button
+        android:id="@+id/btnSubmitSSN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/btn_zip_submit"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/etSSN"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/etSSN"
+        app:layout_constraintTop_toBottomOf="@+id/etSSN" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
