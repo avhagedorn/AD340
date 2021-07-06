@@ -26,12 +26,12 @@
         android:text="@string/zip_legend"
         android:textSize="@dimen/title_text_height"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/etSSN"
+        android:id="@+id/etZip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="150dp"
@@ -45,15 +45,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textHint"/>
 
     <Button
-        android:id="@+id/btnSubmitSSN"
+        android:id="@+id/btnSubmitZip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/btn_zip_submit"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/etSSN"
+        app:layout_constraintEnd_toEndOf="@+id/etZip"
         app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="@+id/etSSN"
-        app:layout_constraintTop_toBottomOf="@+id/etSSN" />
+        app:layout_constraintStart_toStartOf="@+id/etZip"
+        app:layout_constraintTop_toBottomOf="@+id/etZip" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
