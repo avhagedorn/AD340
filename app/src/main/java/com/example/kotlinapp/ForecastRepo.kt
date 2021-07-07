@@ -2,6 +2,7 @@ package com.example.kotlinapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlin.math.round
 import kotlin.random.Random
 
 class ForecastRepo {

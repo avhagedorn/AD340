@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,8 +30,16 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid zipcode!", Toast.LENGTH_SHORT).show()
         }
 
+        val forecastList: RecyclerView = findViewById<RecyclerView>(R.id.rvForecast)
+        forecastList.layoutManager = LinearLayoutManager(this)
+        val forecastDailyAdapter = ForecastDailyAdapter() {
+            val msg = getString(R.string.forecast_clicked_format, it.temp, it.description)
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+        forecastList.adapter = forecastDailyAdapter
+
         val weeklyForecastObserver = Observer<List<ForecastDaily>> {
-            // TODO: Update list adapter
+            forecastDailyAdapter.submitList(it)
         }
 
         forecastRepo.weeklyForecast.observe(this, weeklyForecastObserver)
