@@ -17,10 +17,13 @@ import com.example.kotlinapp.details.ForecastDetailsActivity
 class MainActivity : AppCompatActivity() {
 
     private val forecastRepo = ForecastRepo()
+    private lateinit var tempDisplaySettings: TempDisplaySettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        tempDisplaySettings = TempDisplaySettings(this)
 
         val zipEditText: EditText = findViewById<EditText>(R.id.etZip)
         val zipSubmit: Button = findViewById<Button>(R.id.btnSubmitZip)
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val forecastList: RecyclerView = findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(this)
-        val forecastDailyAdapter = ForecastDailyAdapter() {
+        val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
             showForecastDetails(it)
         }
         forecastList.adapter = forecastDailyAdapter
