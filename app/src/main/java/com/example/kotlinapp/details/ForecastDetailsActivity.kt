@@ -8,10 +8,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.kotlinapp.R
-import com.example.kotlinapp.TempChoices
-import com.example.kotlinapp.TempDisplaySettings
-import com.example.kotlinapp.formatTemp
+import com.example.kotlinapp.*
 
 class ForecastDetailsActivity : AppCompatActivity() {
 
@@ -41,20 +38,10 @@ class ForecastDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.itSettings -> {
-                tempDialog()
+                tempDialog(this, tempDisplaySettings)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun tempDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
-            .setTitle("Unit Preference")
-            .setMessage("Choose a temperature unit!")
-            .setPositiveButton("F") {_,_ -> tempDisplaySettings.updateSetting(TempChoices.Fahrenheit)}
-            .setNeutralButton("C") {_,_ -> tempDisplaySettings.updateSetting(TempChoices.Celsius)}
-            .setOnDismissListener { Toast.makeText(this, "Setting will take effect on restart.", Toast.LENGTH_SHORT).show() }
-        dialogBuilder.show()
     }
 }

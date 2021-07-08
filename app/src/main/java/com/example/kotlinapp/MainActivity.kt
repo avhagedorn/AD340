@@ -58,4 +58,20 @@ class MainActivity : AppCompatActivity() {
         forecastDetailsIntent.putExtra("forecast", forecastData.description)
         startActivity(forecastDetailsIntent)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.settings_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.itSettings -> {
+                tempDialog(this, tempDisplaySettings)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
