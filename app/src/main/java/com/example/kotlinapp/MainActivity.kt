@@ -54,4 +54,11 @@ class MainActivity : AppCompatActivity(), AppNavigator {
             .replace(R.id.flFragment, CurrentForecastFragment.newInstance(zipcode))
             .commit()
     }
+
+    override fun goToZipcodeMenu() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.flFragment, LocationEntryFragment())
+            .commit()
+    }
 }

@@ -1,21 +1,30 @@
 package com.example.kotlinapp.forecast
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
 import com.example.kotlinapp.details.ForecastDetailsActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CurrentForecastFragment : Fragment() {
 
     private val forecastRepo = ForecastRepo()
     private lateinit var tempDisplaySettings: TempDisplaySettings
+    lateinit var appNavigator: AppNavigator
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appNavigator = context as AppNavigator
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +43,11 @@ class CurrentForecastFragment : Fragment() {
 
         val weeklyForecastObserver = Observer<List<ForecastDaily>> {
             forecastDailyAdapter.submitList(it)
+        }
+
+        val zipBtn = view.findViewById<FloatingActionButton>(R.id.btnChangeLocation)
+        zipBtn.setOnClickListener {
+            appNavigator.goToZipcodeMenu()
         }
 
         forecastRepo.weeklyForecast.observe(this, weeklyForecastObserver)
