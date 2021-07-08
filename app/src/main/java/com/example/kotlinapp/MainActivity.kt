@@ -1,13 +1,18 @@
 package com.example.kotlinapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinapp.details.ForecastDetailsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         val forecastList: RecyclerView = findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(this)
         val forecastDailyAdapter = ForecastDailyAdapter() {
-            val msg = getString(R.string.forecast_clicked_format, it.temp, it.description)
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            showForecastDetails(it)
         }
         forecastList.adapter = forecastDailyAdapter
 
@@ -43,9 +47,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         forecastRepo.weeklyForecast.observe(this, weeklyForecastObserver)
-
     }
 
-
-
+    private fun showForecastDetails(forecastData: ForecastDaily) {
+        val forecastDetailsIntent = Intent(this, ForecastDetailsActivity::class.java)
+        forecastDetailsIntent.putExtra("temperature", forecastData.temp)
+        forecastDetailsIntent.putExtra("forecast", forecastData.description)
+        startActivity(forecastDetailsIntent)
+    }
 }
