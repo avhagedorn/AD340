@@ -13,10 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.details.ForecastDetailsActivity
+import com.example.kotlinapp.forecast.CurrentForecastFragment
+import com.example.kotlinapp.location.LocationEntryFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AppNavigator {
 
-    private val forecastRepo = ForecastRepo()
     private lateinit var tempDisplaySettings: TempDisplaySettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,38 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         tempDisplaySettings = TempDisplaySettings(this)
 
-        val zipEditText: EditText = findViewById<EditText>(R.id.etZip)
-        val zipSubmit: Button = findViewById<Button>(R.id.btnSubmitZip)
-
-        zipSubmit.setOnClickListener {
-            val zipcode: String = zipEditText.text.toString()
-            if (zipcode.length == 5) {
-                forecastRepo.loadForecast(zipcode)
-                Toast.makeText(this, zipcode, Toast.LENGTH_SHORT).show()
-            }
-            else
-                Toast.makeText(this, "Invalid zipcode!", Toast.LENGTH_SHORT).show()
-        }
-
-        val forecastList: RecyclerView = findViewById<RecyclerView>(R.id.rvForecast)
-        forecastList.layoutManager = LinearLayoutManager(this)
-        val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
-            showForecastDetails(it)
-        }
-        forecastList.adapter = forecastDailyAdapter
-
-        val weeklyForecastObserver = Observer<List<ForecastDaily>> {
-            forecastDailyAdapter.submitList(it)
-        }
-
-        forecastRepo.weeklyForecast.observe(this, weeklyForecastObserver)
-    }
-
-    private fun showForecastDetails(forecastData: ForecastDaily) {
-        val forecastDetailsIntent = Intent(this, ForecastDetailsActivity::class.java)
-        forecastDetailsIntent.putExtra("temperature", forecastData.temp)
-        forecastDetailsIntent.putExtra("forecast", forecastData.description)
-        startActivity(forecastDetailsIntent)
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.flFragment, LocationEntryFragment())
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -73,5 +46,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun goToCurrentForecast(zipcode: String) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.flFragment, CurrentForecastFragment.newInstance(zipcode))
+            .commit()
     }
 }
