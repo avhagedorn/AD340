@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
 import com.example.kotlinapp.details.ForecastDetailsActivity
+import com.example.kotlinapp.details.ForecastDetailsFragmentArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CurrentForecastFragment : Fragment() {
@@ -33,7 +35,9 @@ class CurrentForecastFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
 
-        val zipcode = requireArguments().getString(ZIPCODE) ?: ""
+        val args: CurrentForecastFragmentArgs by navArgs()
+
+        val zipcode = args.zipcode
         tempDisplaySettings = TempDisplaySettings(requireContext())
         val forecastList: RecyclerView = view.findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(requireContext())
@@ -66,15 +70,15 @@ class CurrentForecastFragment : Fragment() {
 //        startActivity(forecastDetailsIntent)
 //    }
 
-    companion object {
-        const val ZIPCODE = "zipcode"
-
-        fun newInstance(zipcode: String): CurrentForecastFragment {
-            val fragment = CurrentForecastFragment()
-            val args = Bundle()
-            args.putString(ZIPCODE, zipcode)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+//    companion object {
+//        const val ZIPCODE = "zipcode"
+//
+//        fun newInstance(zipcode: String): CurrentForecastFragment {
+//            val fragment = CurrentForecastFragment()
+//            val args = Bundle()
+//            args.putString(ZIPCODE, zipcode)
+//            fragment.arguments = args
+//            return fragment
+//        }
+//    }
 }

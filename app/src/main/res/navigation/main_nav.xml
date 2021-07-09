@@ -25,6 +25,10 @@
         <action
             android:id="@+id/action_currentForecastFragment_to_forecastDetailsFragment"
             app:destination="@id/forecastDetailsFragment" />
+        <argument
+            android:name="zipcode"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/forecastDetailsFragment"
