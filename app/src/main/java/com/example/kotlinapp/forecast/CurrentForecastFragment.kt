@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
-import com.example.kotlinapp.details.ForecastDetailsActivity
 import com.example.kotlinapp.details.ForecastDetailsFragmentArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -43,7 +42,7 @@ class CurrentForecastFragment : Fragment() {
         forecastList.layoutManager = LinearLayoutManager(requireContext())
         val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
             // showForecastDetails(it)
-            appNavigator.showForecastDetails(it)
+            appNavigator.goToDetailedForecast(it)
         }
         forecastList.adapter = forecastDailyAdapter
 
