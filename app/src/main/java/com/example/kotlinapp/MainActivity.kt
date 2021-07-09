@@ -10,11 +10,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.details.ForecastDetailsActivity
 import com.example.kotlinapp.forecast.CurrentForecastFragment
+import com.example.kotlinapp.forecast.CurrentForecastFragmentDirections
 import com.example.kotlinapp.location.LocationEntryFragment
+import com.example.kotlinapp.location.LocationEntryFragmentDirections
 
 class MainActivity : AppCompatActivity(), AppNavigator {
 
@@ -25,11 +28,6 @@ class MainActivity : AppCompatActivity(), AppNavigator {
         setContentView(R.layout.activity_main)
 
         tempDisplaySettings = TempDisplaySettings(this)
-
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.flFragment, LocationEntryFragment())
-            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -49,16 +47,13 @@ class MainActivity : AppCompatActivity(), AppNavigator {
     }
 
     override fun goToCurrentForecast(zipcode: String) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.flFragment, CurrentForecastFragment.newInstance(zipcode))
-            .commit()
+        val action = LocationEntryFragmentDirections.actionLocationEntryFragmentToCurrentForecastFragment()
+        findNavController(R.id.nav_host_fragment).navigate(action)
     }
 
     override fun goToZipcodeMenu() {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.flFragment, LocationEntryFragment())
-            .commit()
+        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToLocationEntryFragment()
+        findNavController(R.id.nav_host_fragment).navigate(action)
     }
+
 }
