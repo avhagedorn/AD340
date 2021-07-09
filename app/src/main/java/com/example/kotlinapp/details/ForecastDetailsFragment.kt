@@ -15,6 +15,7 @@ import com.example.kotlinapp.formatTemp
 
 class ForecastDetailsFragment : Fragment() {
 
+    private val args: ForecastDetailsFragmentArgs by navArgs()
     private lateinit var tempDisplaySettings: TempDisplaySettings
 
     override fun onCreateView(
@@ -23,9 +24,7 @@ class ForecastDetailsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_forecast_details, container, false)
 
-        tempDisplaySettings = TempDisplaySettings(view.context) // ?
-
-        val args: ForecastDetailsFragmentArgs by navArgs()
+        tempDisplaySettings = TempDisplaySettings(requireContext())
 
         val tempText = view.findViewById<TextView>(R.id.txtDetailedTemp)
         val descriptionText = view.findViewById<TextView>(R.id.txtDetailedDescription)

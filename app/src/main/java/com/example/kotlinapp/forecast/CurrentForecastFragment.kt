@@ -41,7 +41,6 @@ class CurrentForecastFragment : Fragment() {
         val forecastList: RecyclerView = view.findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(requireContext())
         val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
-            // showForecastDetails(it)
             appNavigator.goToDetailedForecast(it)
         }
         forecastList.adapter = forecastDailyAdapter
@@ -60,24 +59,4 @@ class CurrentForecastFragment : Fragment() {
 
         return view
     }
-
-    // TODO: REFACTOR ME
-//    private fun showForecastDetails(forecastData: ForecastDaily) {
-//        val forecastDetailsIntent = Intent(requireContext(), ForecastDetailsActivity::class.java)
-//        forecastDetailsIntent.putExtra("temperature", forecastData.temp)
-//        forecastDetailsIntent.putExtra("forecast", forecastData.description)
-//        startActivity(forecastDetailsIntent)
-//    }
-
-//    companion object {
-//        const val ZIPCODE = "zipcode"
-//
-//        fun newInstance(zipcode: String): CurrentForecastFragment {
-//            val fragment = CurrentForecastFragment()
-//            val args = Bundle()
-//            args.putString(ZIPCODE, zipcode)
-//            fragment.arguments = args
-//            return fragment
-//        }
-//    }
 }
