@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
@@ -32,11 +33,12 @@ class CurrentForecastFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
 
-        val zipcode = arguments!!.getString(ZIPCODE) ?: ""
+        val zipcode = requireArguments().getString(ZIPCODE) ?: ""
         tempDisplaySettings = TempDisplaySettings(requireContext())
         val forecastList: RecyclerView = view.findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(requireContext())
         val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
+            // showForecastDetails(it)
             showForecastDetails(it)
         }
         forecastList.adapter = forecastDailyAdapter
@@ -50,17 +52,23 @@ class CurrentForecastFragment : Fragment() {
             appNavigator.goToZipcodeMenu()
         }
 
-        forecastRepo.weeklyForecast.observe(this, weeklyForecastObserver)
+        forecastRepo.weeklyForecast.observe(viewLifecycleOwner, weeklyForecastObserver)
         forecastRepo.loadForecast(zipcode)
 
         return view
     }
 
+    // TODO: REFACTOR ME
+//    private fun showForecastDetails(forecastData: ForecastDaily) {
+//        val forecastDetailsIntent = Intent(requireContext(), ForecastDetailsActivity::class.java)
+//        forecastDetailsIntent.putExtra("temperature", forecastData.temp)
+//        forecastDetailsIntent.putExtra("forecast", forecastData.description)
+//        startActivity(forecastDetailsIntent)
+//    }
+
     private fun showForecastDetails(forecastData: ForecastDaily) {
-        val forecastDetailsIntent = Intent(requireContext(), ForecastDetailsActivity::class.java)
-        forecastDetailsIntent.putExtra("temperature", forecastData.temp)
-        forecastDetailsIntent.putExtra("forecast", forecastData.description)
-        startActivity(forecastDetailsIntent)
+        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
+        findNavController().navigate(action)
     }
 
     companion object {

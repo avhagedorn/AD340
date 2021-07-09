@@ -22,5 +22,22 @@
         <action
             android:id="@+id/action_currentForecastFragment_to_locationEntryFragment"
             app:destination="@id/locationEntryFragment" />
+        <action
+            android:id="@+id/action_currentForecastFragment_to_forecastDetailsFragment"
+            app:destination="@id/forecastDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastDetailsFragment"
+        android:name="com.example.kotlinapp.details.ForecastDetailsFragment"
+        android:label="fragment_forecast_details"
+        tools:layout="@layout/fragment_forecast_details" >
+        <argument
+            android:name="temperature"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>
