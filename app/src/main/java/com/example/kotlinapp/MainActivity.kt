@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.details.ForecastDetailsActivity
@@ -60,5 +61,10 @@ class MainActivity : AppCompatActivity(), AppNavigator {
 //        val action = ForecastDetailsFragmentDirections.action
 //        findNavController(R.id.nav_host_fragment).navigate(action)
 //    }
+
+    override fun showForecastDetails(forecastData: ForecastDaily) {
+        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
+        findNavController(R.id.nav_host_fragment).navigate(action)
+    }
 
 }

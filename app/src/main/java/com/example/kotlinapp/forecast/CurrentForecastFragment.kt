@@ -39,7 +39,7 @@ class CurrentForecastFragment : Fragment() {
         forecastList.layoutManager = LinearLayoutManager(requireContext())
         val forecastDailyAdapter = ForecastDailyAdapter(tempDisplaySettings) {
             // showForecastDetails(it)
-            showForecastDetails(it)
+            appNavigator.showForecastDetails(it)
         }
         forecastList.adapter = forecastDailyAdapter
 
@@ -65,11 +65,6 @@ class CurrentForecastFragment : Fragment() {
 //        forecastDetailsIntent.putExtra("forecast", forecastData.description)
 //        startActivity(forecastDetailsIntent)
 //    }
-
-    private fun showForecastDetails(forecastData: ForecastDaily) {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
-        findNavController().navigate(action)
-    }
 
     companion object {
         const val ZIPCODE = "zipcode"
