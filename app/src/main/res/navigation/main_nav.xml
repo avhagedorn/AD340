@@ -3,21 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/locationEntryFragment">
+    app:startDestination="@id/weeklyForecastFragment">
 
     <fragment
         android:id="@+id/locationEntryFragment"
         android:name="com.example.kotlinapp.location.LocationEntryFragment"
-        android:label="fragment_location_entry"
-        tools:layout="@layout/fragment_location_entry" >
-        <action
-            android:id="@+id/action_locationEntryFragment_to_currentForecastFragment"
-            app:destination="@id/currentForecastFragment" />
-    </fragment>
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_location_entry" />
     <fragment
         android:id="@+id/currentForecastFragment"
         android:name="com.example.kotlinapp.forecast.CurrentForecastFragment"
-        android:label="fragment_current_forecast"
+        android:label="Current Forecast"
         tools:layout="@layout/fragment_current_forecast" >
         <action
             android:id="@+id/action_currentForecastFragment_to_locationEntryFragment"
@@ -25,15 +21,11 @@
         <action
             android:id="@+id/action_currentForecastFragment_to_forecastDetailsFragment"
             app:destination="@id/forecastDetailsFragment" />
-        <argument
-            android:name="zipcode"
-            app:argType="string"
-            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/forecastDetailsFragment"
         android:name="com.example.kotlinapp.details.ForecastDetailsFragment"
-        android:label="fragment_forecast_details"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_forecast_details" >
         <argument
             android:name="temperature"
@@ -43,5 +35,17 @@
             android:name="description"
             app:argType="string"
             android:defaultValue='""' />
+    </fragment>
+    <fragment
+        android:id="@+id/weeklyForecastFragment"
+        android:name="com.example.kotlinapp.forecast.WeeklyForecastFragment"
+        android:label="@string/weekly_forecast"
+        tools:layout="@layout/fragment_weekly_forecast">
+        <action
+            android:id="@+id/action_weeklyForecastFragment_to_forecastDetailsFragment"
+            app:destination="@id/forecastDetailsFragment" />
+        <action
+            android:id="@+id/action_weeklyForecastFragment_to_locationEntryFragment"
+            app:destination="@id/locationEntryFragment" />
     </fragment>
 </navigation>

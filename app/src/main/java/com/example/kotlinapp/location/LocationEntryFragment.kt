@@ -9,18 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.kotlinapp.AppNavigator
+import androidx.navigation.fragment.findNavController
 import com.example.kotlinapp.MainActivity
 import com.example.kotlinapp.R
 
 class LocationEntryFragment : Fragment() {
-
-    lateinit var appNavigator: AppNavigator
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        appNavigator = context as AppNavigator
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +28,7 @@ class LocationEntryFragment : Fragment() {
         zipSubmit.setOnClickListener {
             val zipcode: String = zipEditText.text.toString()
             if (zipcode.length == 5) {
-                appNavigator.goToCurrentForecast(zipcode)
+                findNavController().navigateUp()
             }
             else
                 Toast.makeText(requireContext(), "Invalid zipcode!", Toast.LENGTH_SHORT).show()

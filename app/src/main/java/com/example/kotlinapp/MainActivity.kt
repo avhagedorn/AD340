@@ -9,17 +9,21 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.forecast.CurrentForecastFragment
 import com.example.kotlinapp.forecast.CurrentForecastFragmentDirections
 import com.example.kotlinapp.location.LocationEntryFragment
-import com.example.kotlinapp.location.LocationEntryFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), AppNavigator {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var tempDisplaySettings: TempDisplaySettings
 
@@ -28,6 +32,11 @@ class MainActivity : AppCompatActivity(), AppNavigator {
         setContentView(R.layout.activity_main)
 
         tempDisplaySettings = TempDisplaySettings(this)
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfig = AppBarConfiguration(navController.graph)
+        findViewById<Toolbar>(R.id.toolbar).setTitle(R.string.app_name)
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -45,20 +54,4 @@ class MainActivity : AppCompatActivity(), AppNavigator {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    override fun goToCurrentForecast(zipcode: String) {
-        val action = LocationEntryFragmentDirections.actionLocationEntryFragmentToCurrentForecastFragment(zipcode)
-        findNavController(R.id.nav_host_fragment).navigate(action)
-    }
-
-    override fun goToZipcodeMenu() {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToLocationEntryFragment()
-        findNavController(R.id.nav_host_fragment).navigate(action)
-    }
-
-    override fun goToDetailedForecast(forecastData: ForecastDaily) {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
-        findNavController(R.id.nav_host_fragment).navigate(action)
-    }
-
 }

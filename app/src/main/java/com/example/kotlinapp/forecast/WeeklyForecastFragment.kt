@@ -17,7 +17,7 @@ import com.example.kotlinapp.*
 import com.example.kotlinapp.details.ForecastDetailsFragmentArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class CurrentForecastFragment : Fragment() {
+class WeeklyForecastFragment : Fragment() {
 
     private val forecastRepo = ForecastRepo()
     private lateinit var tempDisplaySettings: TempDisplaySettings
@@ -26,7 +26,7 @@ class CurrentForecastFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
+        val view = inflater.inflate(R.layout.fragment_weekly_forecast, container, false)
 
         val zipcode = "11111"
         tempDisplaySettings = TempDisplaySettings(requireContext())
@@ -41,7 +41,7 @@ class CurrentForecastFragment : Fragment() {
             forecastDailyAdapter.submitList(it)
         }
 
-        val zipBtn = view.findViewById<FloatingActionButton>(R.id.btnCurrentNav)
+        val zipBtn = view.findViewById<FloatingActionButton>(R.id.btnWeeklyNav)
         zipBtn.setOnClickListener {
             goToZipcodeMenu()
         }
@@ -53,12 +53,12 @@ class CurrentForecastFragment : Fragment() {
     }
 
     private fun goToZipcodeMenu() {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToLocationEntryFragment()
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToLocationEntryFragment()
         findNavController().navigate(action)
     }
 
     private fun goToDetailedForecast(forecastData: ForecastDaily) {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
         findNavController().navigate(action)
     }
 }
