@@ -10,15 +10,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.kotlinapp.Location
+import com.example.kotlinapp.LocationRepo
 import com.example.kotlinapp.MainActivity
 import com.example.kotlinapp.R
 
 class LocationEntryFragment : Fragment() {
 
+    private lateinit var locationRepo: LocationRepo
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        locationRepo = LocationRepo(requireContext())
+
         // Inflate the layout for this fragment, standard approach
         val view = inflater.inflate(R.layout.fragment_location_entry, container, false)
 
@@ -28,6 +34,7 @@ class LocationEntryFragment : Fragment() {
         zipSubmit.setOnClickListener {
             val zipcode: String = zipEditText.text.toString()
             if (zipcode.length == 5) {
+                locationRepo.saveLocation(Location.Zipcode(zipcode))
                 findNavController().navigateUp()
             }
             else

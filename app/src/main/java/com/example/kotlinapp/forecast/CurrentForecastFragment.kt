@@ -21,6 +21,7 @@ class CurrentForecastFragment : Fragment() {
 
     private val forecastRepo = ForecastRepo()
     private lateinit var tempDisplaySettings: TempDisplaySettings
+    private lateinit var locationRepo: LocationRepo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +29,6 @@ class CurrentForecastFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
 
-        val zipcode = "11111"
         tempDisplaySettings = TempDisplaySettings(requireContext())
         val forecastList: RecyclerView = view.findViewById<RecyclerView>(R.id.rvForecast)
         forecastList.layoutManager = LinearLayoutManager(requireContext())
@@ -37,17 +37,23 @@ class CurrentForecastFragment : Fragment() {
         }
         forecastList.adapter = forecastDailyAdapter
 
-        val weeklyForecastObserver = Observer<List<ForecastDaily>> {
-            forecastDailyAdapter.submitList(it)
+        val currentForecastObserver = Observer<ForecastDaily> {
+            forecastDailyAdapter.submitList(listOf(it))
         }
+        forecastRepo.currentForecast.observe(viewLifecycleOwner, currentForecastObserver)
 
         val zipBtn = view.findViewById<FloatingActionButton>(R.id.btnCurrentNav)
         zipBtn.setOnClickListener {
             goToZipcodeMenu()
         }
 
-        forecastRepo.weeklyForecast.observe(viewLifecycleOwner, weeklyForecastObserver)
-        forecastRepo.loadForecast(zipcode)
+        locationRepo = LocationRepo(requireContext())
+        val savedLocationObserver = Observer<Location> {location ->
+            when (location) {
+                is Location.Zipcode -> forecastRepo.loadCurrentForecast(location.zipcode)
+            }
+        }
+        locationRepo.savedLocation.observe(viewLifecycleOwner, savedLocationObserver)
 
         return view
     }
