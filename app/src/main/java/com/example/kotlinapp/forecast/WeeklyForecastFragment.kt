@@ -37,15 +37,10 @@ class WeeklyForecastFragment : Fragment() {
         }
         forecastList.adapter = forecastDailyAdapter
 
-        val currentForecastObserver = Observer<ForecastDaily> {
-            forecastDailyAdapter.submitList(listOf(it))
-        }
-        forecastRepo.currentForecast.observe(viewLifecycleOwner, currentForecastObserver)
-
-        val weeklyForecastObserver = Observer<List<ForecastDaily>> {
+        val currentForecastObserver = Observer<List<ForecastDaily>> {
             forecastDailyAdapter.submitList(it)
         }
-        forecastRepo.weeklyForecast.observe(viewLifecycleOwner, weeklyForecastObserver)
+        forecastRepo.weeklyForecast.observe(viewLifecycleOwner, currentForecastObserver)
 
         val zipBtn = view.findViewById<FloatingActionButton>(R.id.btnWeeklyNav)
         zipBtn.setOnClickListener {

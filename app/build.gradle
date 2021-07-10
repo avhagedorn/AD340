@@ -4,6 +4,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -16,6 +19,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "OPEN_WEATHER_MAP_API_KEY", "\"${localProperties["OPEN_WEATHER_MAP_API_KEY"]}\"")
     }
 
     buildTypes {

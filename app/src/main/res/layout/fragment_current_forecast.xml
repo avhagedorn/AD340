@@ -6,16 +6,13 @@
     tools:context=".forecast.CurrentForecastFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvForecast"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/forecast_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_daily_forecast"/>
+    <TextView
+        android:id="@+id/txtCurrentTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/txtLocation"
+        app:layout_constraintTop_toBottomOf="@+id/txtLocation"
+        tools:text="85.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCurrentNav"
@@ -28,5 +25,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:focusable="true" />
+
+    <TextView
+        android:id="@+id/txtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

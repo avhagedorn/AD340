@@ -1,17 +1,21 @@
 package com.example.kotlinapp
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.kotlinapp.api.CurrentWeather
+import com.example.kotlinapp.api.createOpenWeatherMapService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.round
 import kotlin.random.Random
 
 class ForecastRepo {
 
-    // KEY: a0de1401871ac3bc1fd6412833bc600e
-
     // Repositories describe the amount and type of data which gets created, loaded, and returned.
-    private val _currentForecast = MutableLiveData<ForecastDaily>()
-    val currentForecast: LiveData<ForecastDaily> = _currentForecast
+    private val _currentWeather = MutableLiveData<CurrentWeather>()
+    val currentWeather: LiveData<CurrentWeather> = _currentWeather
     private val _weeklyForecast = MutableLiveData<List<ForecastDaily>>()
     val weeklyForecast: LiveData<List<ForecastDaily>> = _weeklyForecast
 
@@ -24,8 +28,21 @@ class ForecastRepo {
     }
 
     fun loadCurrentForecast(zipcode: String) {
-        val temp = Random.nextFloat().rem(100) * 100
-        _currentForecast.value = ForecastDaily(temp, getTempDescription(temp))
+        val call = createOpenWeatherMapService().currentWeather(zipcode, "imperial", "a0de1401871ac3bc1fd6412833bc600e")
+
+        call.enqueue(object: Callback<CurrentWeather> {
+            override fun onResponse(call: Call<CurrentWeather>, response: Response<CurrentWeather>) {
+                val weatherResponse = response.body()
+                if (weatherResponse != null) {
+                    _currentWeather.value = weatherResponse
+                }
+            }
+
+            override fun onFailure(call: Call<CurrentWeather>, t: Throwable) {
+                Log.e(ForecastRepo::class.java.simpleName, "Error loading weather", t)
+            }
+
+        })
     }
 
     private fun getTempDescription(temp: Float) : String {
