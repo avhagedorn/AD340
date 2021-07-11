@@ -10,11 +10,12 @@
         android:id="@+id/txtDetailedTemp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        app:layout_constraintStart_toEndOf="@+id/imgDetailed"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Sample" />
 
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="@+id/txtDetailedTemp"
+        app:layout_constraintEnd_toEndOf="@+id/txtDetailedTemp"
         app:layout_constraintTop_toBottomOf="@+id/txtDetailedTemp"
         tools:text="Description" />
 
