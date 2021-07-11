@@ -14,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
+import com.example.kotlinapp.api.DailyForecast
+import com.example.kotlinapp.api.WeeklyForecast
 import com.example.kotlinapp.details.ForecastDetailsFragmentArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -37,8 +39,8 @@ class WeeklyForecastFragment : Fragment() {
         }
         forecastList.adapter = forecastDailyAdapter
 
-        val currentForecastObserver = Observer<List<ForecastDaily>> {
-            forecastDailyAdapter.submitList(it)
+        val currentForecastObserver = Observer<WeeklyForecast> {
+            forecastDailyAdapter.submitList(it.daily)
         }
         forecastRepo.weeklyForecast.observe(viewLifecycleOwner, currentForecastObserver)
 
@@ -63,8 +65,10 @@ class WeeklyForecastFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun goToDetailedForecast(forecastData: ForecastDaily) {
-        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
+    private fun goToDetailedForecast(forecastData: DailyForecast) {
+        val temp = forecastData.temp.max
+        val description = forecastData.weather[0].description
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(temp, description)
         findNavController().navigate(action)
     }
 }

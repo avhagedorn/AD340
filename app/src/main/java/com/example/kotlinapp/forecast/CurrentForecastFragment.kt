@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinapp.*
 import com.example.kotlinapp.api.CurrentWeather
+import com.example.kotlinapp.api.DailyForecast
 import com.example.kotlinapp.details.ForecastDetailsFragmentArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -63,8 +64,4 @@ class CurrentForecastFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun goToDetailedForecast(forecastData: ForecastDaily) {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecastData.temp, forecastData.description)
-        findNavController().navigate(action)
-    }
 }

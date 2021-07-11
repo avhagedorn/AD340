@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.navArgs
-import com.example.kotlinapp.ForecastDaily
 import com.example.kotlinapp.R
 import com.example.kotlinapp.TempDisplaySettings
 import com.example.kotlinapp.forecast.CurrentForecastFragment
