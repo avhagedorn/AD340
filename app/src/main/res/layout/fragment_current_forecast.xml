@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".forecast.CurrentForecastFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".forecast.CurrentForecastFragment">
 
     <TextView
         android:id="@+id/txtCurrentTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/txtLocation"
-        app:layout_constraintTop_toBottomOf="@+id/txtLocation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
         tools:text="85.0" />
+
+    <TextView
+        android:id="@+id/txtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="@+id/txtCurrentTemp"
+        app:layout_constraintTop_toBottomOf="@+id/txtCurrentTemp"
+        tools:text="Location" />
+
+    <TextView
+        android:id="@+id/txtCurrentDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/imgDetailedIcon"
+        app:layout_constraintStart_toStartOf="@+id/imgDetailedIcon"
+        app:layout_constraintTop_toBottomOf="@+id/imgDetailedIcon" />
+
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:layout_margin="16dp"
+        android:id="@+id/imgDetailedIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCurrentNav"
@@ -21,19 +49,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_baseline_location_on_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="true" />
-
-    <TextView
-        android:id="@+id/txtLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Location" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

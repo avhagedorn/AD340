@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.kotlinapp.*
 import com.example.kotlinapp.api.CurrentWeather
 import com.example.kotlinapp.api.DailyForecast
@@ -34,12 +36,17 @@ class CurrentForecastFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
         val locationName: TextView = view.findViewById(R.id.txtLocation)
         val currentTemp: TextView = view.findViewById(R.id.txtCurrentTemp)
+        val icon: ImageView = view.findViewById(R.id.imgDetailedIcon)
+        val description: TextView = view.findViewById(R.id.txtCurrentDescription)
         tempDisplaySettings = TempDisplaySettings(requireContext())
 
         val currentWeatherObserver = Observer<CurrentWeather> {
             locationName.text = it.name
-            Log.d("API Temperature", it.forecast.temp.toString())
             currentTemp.text = formatTemp(it.forecast.temp, tempDisplaySettings.getSetting())
+            description.text = it.weather[0].main
+
+            val iconId = it.weather[0].icon
+            icon.load("https://openweathermap.org/img/wn/$iconId@2x.png")
         }
         forecastRepo.currentWeather.observe(viewLifecycleOwner, currentWeatherObserver)
 
