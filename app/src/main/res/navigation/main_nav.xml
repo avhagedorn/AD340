@@ -32,6 +32,10 @@
             android:name="description"
             app:argType="string"
             android:defaultValue='""' />
+        <argument
+            android:name="icon"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/weeklyForecastFragment"

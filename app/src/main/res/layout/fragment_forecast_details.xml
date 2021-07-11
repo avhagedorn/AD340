@@ -14,7 +14,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgDetailed"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Sample" />
 
@@ -26,5 +26,13 @@
         app:layout_constraintStart_toStartOf="@+id/txtDetailedTemp"
         app:layout_constraintTop_toBottomOf="@+id/txtDetailedTemp"
         tools:text="Description" />
+
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:layout_margin="16dp"
+        android:id="@+id/imgDetailed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
