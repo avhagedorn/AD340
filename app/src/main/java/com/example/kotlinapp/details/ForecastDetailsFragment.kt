@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.kotlinapp.R
 import com.example.kotlinapp.TempDisplaySettings
+import com.example.kotlinapp.databinding.FragmentForecastDetailsBinding
 import com.example.kotlinapp.forecast.CurrentForecastFragment
 import com.example.kotlinapp.formatTemp
 
@@ -19,25 +20,28 @@ class ForecastDetailsFragment : Fragment() {
     private val args: ForecastDetailsFragmentArgs by navArgs()
     private lateinit var tempDisplaySettings: TempDisplaySettings
 
+    private var _binding: FragmentForecastDetailsBinding? = null
+    // Only valid between onCreateView and onDestroyView
+    private val binding get()= _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_forecast_details, container, false)
-        // val binding = FragmentDetailsFragmentBinding.inflate(inflater, parent, false)
+        _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
 
         tempDisplaySettings = TempDisplaySettings(requireContext())
+        binding.txtDetailedTemp.text = formatTemp(args.temperature, tempDisplaySettings.getSetting())
+        binding.txtDetailedDescription.text = args.description
+        binding.imgDetailed.load("https://openweathermap.org/img/wn/${args.icon}@2x.png")
 
-        val tempText = view.findViewById<TextView>(R.id.txtDetailedTemp)
-        val descriptionText = view.findViewById<TextView>(R.id.txtDetailedDescription)
-        val imgDetailed = view.findViewById<ImageView>(R.id.imgDetailed)
+        return binding.root
+    }
 
-        tempText.text = formatTemp(args.temperature, tempDisplaySettings.getSetting())
-        descriptionText.text = args.description
-        val iconId = args.icon
-        imgDetailed.load("https://openweathermap.org/img/wn/$iconId@2x.png")
-
-        return view
+    // Cleans up memory
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
