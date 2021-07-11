@@ -5,21 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.example.kotlinapp.R
 import com.example.kotlinapp.TempDisplaySettings
 import com.example.kotlinapp.databinding.FragmentForecastDetailsBinding
-import com.example.kotlinapp.forecast.CurrentForecastFragment
 import com.example.kotlinapp.formatTemp
 
 class ForecastDetailsFragment : Fragment() {
 
     private val args: ForecastDetailsFragmentArgs by navArgs()
-    private lateinit var tempDisplaySettings: TempDisplaySettings
 
+    private lateinit var viewModelFactory: ForecastDetailsViewModelFactory
+    // Enables view model scoping
+    private val viewModel: ForecastDetailsViewModel by viewModels(
+        factoryProducer = { viewModelFactory }
+    )
+
+    private lateinit var tempDisplaySettings: TempDisplaySettings
     private var _binding: FragmentForecastDetailsBinding? = null
     // Only valid between onCreateView and onDestroyView
     private val binding get()= _binding!!
@@ -29,13 +33,20 @@ class ForecastDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
-
         tempDisplaySettings = TempDisplaySettings(requireContext())
-        binding.txtDetailedTemp.text = formatTemp(args.temperature, tempDisplaySettings.getSetting())
-        binding.txtDetailedDescription.text = args.description
-        binding.imgDetailed.load("https://openweathermap.org/img/wn/${args.icon}@2x.png")
-
+        viewModelFactory = ForecastDetailsViewModelFactory(args)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewStateObserver = Observer<ForecastDetailsViewState> { viewState ->
+            binding.txtDetailedTemp.text = formatTemp(viewState.temp, tempDisplaySettings.getSetting())
+            binding.txtDetailedDescription.text = viewState.details
+            binding.txtDetailedDate.text = viewState.date
+            binding.imgDetailed.load(viewState.icon)
+        }
+        viewModel.viewState.observe(viewLifecycleOwner, viewStateObserver)
     }
 
     // Cleans up memory
