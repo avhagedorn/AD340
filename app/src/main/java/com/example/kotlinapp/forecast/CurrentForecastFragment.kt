@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -38,9 +39,15 @@ class CurrentForecastFragment : Fragment() {
         val currentTemp: TextView = view.findViewById(R.id.txtCurrentTemp)
         val icon: ImageView = view.findViewById(R.id.imgDetailedIcon)
         val description: TextView = view.findViewById(R.id.txtCurrentDescription)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar2)
         tempDisplaySettings = TempDisplaySettings(requireContext())
 
         val currentWeatherObserver = Observer<CurrentWeather> {
+            progressBar.visibility = View.GONE
+            description.visibility = View.VISIBLE
+            icon.visibility = View.VISIBLE
+            currentTemp.visibility = View.VISIBLE
+            locationName.visibility = View.VISIBLE
             locationName.text = it.name
             currentTemp.text = formatTemp(it.forecast.temp, tempDisplaySettings.getSetting())
             description.text = it.weather[0].main
@@ -58,7 +65,10 @@ class CurrentForecastFragment : Fragment() {
         locationRepo = LocationRepo(requireContext())
         val savedLocationObserver = Observer<Location> {location ->
             when (location) {
-                is Location.Zipcode -> forecastRepo.loadCurrentForecast(location.zipcode)
+                is Location.Zipcode -> {
+                    progressBar.visibility = View.VISIBLE
+                    forecastRepo.loadCurrentForecast(location.zipcode)
+                }
             }
         }
         locationRepo.savedLocation.observe(viewLifecycleOwner, savedLocationObserver)

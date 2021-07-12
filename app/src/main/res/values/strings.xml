@@ -9,4 +9,5 @@
     <string name="bottom_today">Today</string>
     <string name="bottom_weekly">Weekly</string>
     <string name="weekly_forecast">Weekly Forecast</string>
+    <string name="initial_prompt">Enter zipcode to view weather!</string>
 </resources>
