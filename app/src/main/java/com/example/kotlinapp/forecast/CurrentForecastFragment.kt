@@ -40,10 +40,12 @@ class CurrentForecastFragment : Fragment() {
         val icon: ImageView = view.findViewById(R.id.imgDetailedIcon)
         val description: TextView = view.findViewById(R.id.txtCurrentDescription)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar2)
+        val emptyText = view.findViewById<TextView>(R.id.txtInitialPrompt)
         tempDisplaySettings = TempDisplaySettings(requireContext())
 
         val currentWeatherObserver = Observer<CurrentWeather> {
             progressBar.visibility = View.GONE
+            emptyText.visibility = View.GONE
             description.visibility = View.VISIBLE
             icon.visibility = View.VISIBLE
             currentTemp.visibility = View.VISIBLE
